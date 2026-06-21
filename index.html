@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Terralyze — Carbon Footprint Tracker & Eco-Awareness Platform</title>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <!-- Core Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+  <!-- Lucide Icons CDN -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+  <!-- Animated Background Canvas/Gradients -->
+  <div class="bg-glow bg-glow-1"></div>
+  <div class="bg-glow bg-glow-2"></div>
+  <div class="bg-glow bg-glow-3"></div>
+  <div class="bg-grid"></div>
+
+  <!-- App Wrapper -->
+  <div class="app-container">
+    
+    <!-- Sidebar Navigation (Desktop) -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="logo">
+          <div class="logo-icon">
+            <i data-lucide="leaf"></i>
+          </div>
+          <span class="logo-text">Terralyze <span class="gradient-text">Eco</span></span>
+        </div>
+      </div>
+      
+      <nav class="sidebar-nav">
+        <button class="nav-item active" data-tab="dashboard">
+          <i data-lucide="layout-dashboard"></i>
+          <span>Dashboard</span>
+        </button>
+        <button class="nav-item" data-tab="calculator">
+          <i data-lucide="calculator"></i>
+          <span>Carbon Calculator</span>
+        </button>
+        <button class="nav-item" data-tab="challenges">
+          <i data-lucide="trophy"></i>
+          <span>Challenges & Tips</span>
+        </button>
+        <button class="nav-item" data-tab="simulator">
+          <i data-lucide="tree-pine"></i>
+          <span>Offset Simulator</span>
+        </button>
+        <button class="nav-item" data-tab="trivia">
+          <i data-lucide="help-circle"></i>
+          <span>Eco-Trivia Game</span>
+        </button>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="user-status-card">
+          <div class="user-avatar">
+            <span>TE</span>
+            <span class="online-indicator"></span>
+          </div>
+          <div class="user-info">
+            <p class="user-name">Green Pioneer</p>
+            <div class="streak-mini">
+              <i data-lucide="flame" class="streak-icon"></i>
+              <span id="mini-streak-count">1</span> Day Streak
+            </div>
+          </div>
+        </div>
+        
+        <div class="audio-control-wrapper">
+          <button id="toggle-audio-btn" class="audio-toggle-btn" title="Toggle Sound FX">
+            <i data-lucide="volume-2" id="audio-icon"></i>
+            <span>Sound Effects</span>
+          </button>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Mobile Navigation Bar -->
+    <nav class="mobile-nav">
+      <button class="mobile-nav-item active" data-tab="dashboard">
+        <i data-lucide="layout-dashboard"></i>
+        <span>Dashboard</span>
+      </button>
+      <button class="mobile-nav-item" data-tab="calculator">
+        <i data-lucide="calculator"></i>
+        <span>Calc</span>
+      </button>
+      <button class="mobile-nav-item" data-tab="challenges">
+        <i data-lucide="trophy"></i>
+        <span>Goals</span>
+      </button>
+      <button class="mobile-nav-item" data-tab="simulator">
+        <i data-lucide="tree-pine"></i>
+        <span>Forest</span>
+      </button>
+      <button class="mobile-nav-item" data-tab="trivia">
+        <i data-lucide="help-circle"></i>
+        <span>Trivia</span>
+      </button>
+    </nav>
+
+    <!-- Main Content Workspace -->
+    <main class="main-content">
+      
+      <!-- Top Action Bar -->
+      <header class="top-bar">
+        <div class="welcome-heading">
+          <h1 id="page-title">Ecological Dashboard</h1>
+          <p id="page-subtitle" class="subtext">Welcome back, Pioneer. Let's analyze your environmental metrics today.</p>
+        </div>
+        
+        <div class="header-actions">
+          <!-- Daily Goal Indicator -->
+          <div class="goal-widget" title="Daily carbon budget utilization progress">
+            <div class="goal-progress-circle">
+              <svg width="40" height="40" viewBox="0 0 40 40">
+                <circle cx="20" cy="20" r="16" class="circle-bg"></circle>
+                <circle cx="20" cy="20" r="16" class="circle-progress" id="header-goal-circle" stroke-dasharray="100.5" stroke-dashoffset="100.5"></circle>
+              </svg>
+              <span class="goal-percentage" id="header-goal-pct">0%</span>
+            </div>
+            <div class="goal-text">
+              <p class="goal-label">Carbon Budget</p>
+              <p class="goal-value" id="header-goal-text">0.0 / 15.0 kg</p>
+            </div>
+          </div>
+
+          <!-- Streak Counter -->
+          <div class="stat-badge streak-badge" id="streak-badge-btn" title="Consecutive eco-friendly tracking days">
+            <i data-lucide="flame"></i>
+            <span class="badge-number" id="streak-count-value">1</span>
+            <span class="badge-label">Days Streak</span>
+          </div>
+        </div>
+      </header>
+
+      <!-- Tab Content Area -->
+      <div class="tab-content-container">
+        
+        <!-- SECTION 1: DASHBOARD -->
+        <section id="tab-dashboard" class="tab-section active">
+          <!-- Hero Banner Glassmorphic -->
+          <div class="dashboard-hero">
+            <div class="hero-left">
+              <h2>Shrink Your Footprint with <span class="gradient-text">Terralyze</span></h2>
+              <p>Calculate your daily transportation, diet, and electricity impact. Unlock actionable carbon reductions and plant visual virtual forests.</p>
+              <div class="hero-actions">
+                <button class="btn btn-primary" onclick="switchTab('calculator')">
+                  <i data-lucide="plus"></i> Log Activity
+                </button>
+                <button class="btn btn-secondary" onclick="switchTab('challenges')">
+                  <i data-lucide="trophy"></i> Explore Challenges
+                </button>
+              </div>
+            </div>
+            <div class="hero-right">
+              <div class="radar-widget-container">
+                <div class="radar-circle circle-l1"></div>
+                <div class="radar-circle circle-l2"></div>
+                <div class="radar-circle circle-l3"></div>
+                <div class="radar-core">
+                  <i data-lucide="globe"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Metric Cards Grid -->
+          <div class="metrics-grid">
+            <div class="metric-card">
+              <div class="metric-icon val-green">
+                <i data-lucide="activity"></i>
+              </div>
+              <div class="metric-data">
+                <h3 id="stat-today-co2">0.0 kg</h3>
+                <p>Today's Footprint</p>
+              </div>
+              <div class="metric-spark-glow"></div>
+            </div>
+            
+            <div class="metric-card">
+              <div class="metric-icon val-blue">
+                <i data-lucide="calendar"></i>
+              </div>
+              <div class="metric-data">
+                <h3 id="stat-weekly-co2">0.0 kg</h3>
+                <p>Weekly Footprint</p>
+              </div>
+              <div class="metric-spark-glow"></div>
+            </div>
+
+            <div class="metric-card">
+              <div class="metric-icon val-orange">
+                <i data-lucide="trending-down"></i>
+              </div>
+              <div class="metric-data">
+                <h3 id="stat-weekly-avg">0.0 kg</h3>
+                <p>Daily Average</p>
+              </div>
+              <div class="metric-spark-glow"></div>
+            </div>
+
+            <div class="metric-card">
+              <div class="metric-icon val-yellow">
+                <i data-lucide="heart"></i>
+              </div>
+              <div class="metric-data">
+                <h3 id="stat-total-offsets">0.0 kg</h3>
+                <p>Carbon Offsets</p>
+              </div>
+              <div class="metric-spark-glow"></div>
+            </div>
+          </div>
+
+          <!-- Dashboard Double Columns -->
+          <div class="dashboard-rows-layout">
+            <!-- Focus Goal Panel -->
+            <div class="glass-panel focus-goal-panel">
+              <div class="panel-header">
+                <h3><i data-lucide="target" class="panel-icon icon-green"></i> Carbon Budget Limits</h3>
+                <button class="btn-icon-alt" id="edit-goal-btn" title="Configure Target Budget">
+                  <i data-lucide="edit"></i>
+                </button>
+              </div>
+              <div class="panel-body flex-center-col">
+                <div class="large-progress-widget">
+                  <svg width="160" height="160" viewBox="0 0 160 160">
+                    <circle cx="80" cy="80" r="65" class="circle-bg-large"></circle>
+                    <circle cx="80" cy="80" r="65" class="circle-progress-large" id="dashboard-goal-circle" stroke-dasharray="408.4" stroke-dashoffset="408.4"></circle>
+                  </svg>
+                  <div class="large-goal-text">
+                    <span class="large-pct" id="dashboard-goal-pct">0%</span>
+                    <span class="large-val" id="dashboard-goal-val">0.0 / 15.0 kg</span>
+                    <span class="large-sublabel" id="dashboard-goal-sublabel">Emitted</span>
+                  </div>
+                </div>
+                
+                <div class="chart-container">
+                  <h4 style="font-size: 0.8rem; text-transform: uppercase; color: var(--text-muted); letter-spacing: 0.5px; margin-bottom: 0.5rem; text-align: center;">Weekly Emissions Trend (kg CO2e)</h4>
+                  <div class="chart-tooltip" id="chart-tooltip">12.5 kg</div>
+                  <svg class="chart-svg" id="weekly-emissions-chart"></svg>
+                </div>
+              </div>
+            </div>
+
+            <!-- Recent Activity / Logs -->
+            <div class="glass-panel activity-panel">
+              <div class="panel-header">
+                <h3><i data-lucide="history" class="panel-icon icon-cyan"></i> Activity Emissions Log</h3>
+                <button class="btn-icon-alt" id="clear-history-btn" title="Reset All Logs">
+                  <i data-lucide="trash-2"></i>
+                </button>
+              </div>
+              <div class="panel-body">
+                <ul class="activity-list" id="activity-log-list">
+                  <!-- Javascript dynamic load -->
+                  <li class="empty-activity">
+                    <i data-lucide="calendar"></i>
+                    <p>No activity logged today. Add items in the Calculator to track your carbon footprint!</p>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 2: CARBON CALCULATOR -->
+        <section id="tab-calculator" class="tab-section">
+          <div class="grid-2-cols">
+            <!-- Input Settings Panel -->
+            <div class="glass-panel">
+              <div class="panel-header">
+                <h3><i data-lucide="edit-3" class="panel-icon icon-green"></i> Activity Input Studio</h3>
+              </div>
+              <div class="panel-body flex-col-container">
+                <!-- Inner Tabs -->
+                <div class="calculator-tabs">
+                  <button class="calc-tab-btn active" data-type="transport">
+                    <i data-lucide="car"></i> Transport
+                  </button>
+                  <button class="calc-tab-btn" data-type="food">
+                    <i data-lucide="apple"></i> Food
+                  </button>
+                  <button class="calc-tab-btn" data-type="energy">
+                    <i data-lucide="zap"></i> Energy
+                  </button>
+                  <button class="calc-tab-btn" data-type="waste">
+                    <i data-lucide="trash"></i> Waste
+                  </button>
+                </div>
+
+                <!-- Form 1: Transport -->
+                <div class="calc-form-view active" id="form-transport">
+                  <div class="form-group">
+                    <label>Mode of Transportation</label>
+                    <div class="segmented-control" id="transport-mode-selector">
+                      <button class="segment-btn active" data-mode="car">Car</button>
+                      <button class="segment-btn" data-mode="transit">Public Transit</button>
+                      <button class="segment-btn" data-mode="flight">Flight</button>
+                      <button class="segment-btn" data-mode="bike">Active (Bike/Walk)</button>
+                    </div>
+                  </div>
+
+                  <div class="form-group" id="car-fuel-group">
+                    <label for="car-fuel-type">Car Fuel Type</label>
+                    <select id="car-fuel-type" class="form-select">
+                      <option value="petrol">Petrol / Gasoline</option>
+                      <option value="diesel">Diesel</option>
+                      <option value="electric">Electric Vehicle (EV)</option>
+                    </select>
+                  </div>
+
+                  <div class="form-group">
+                    <label id="distance-label">Distance Traveled (km)</label>
+                    <div class="range-slider-container">
+                      <input type="range" id="transport-distance" class="range-slider" min="0" max="200" value="25">
+                      <span class="slider-val-badge" id="transport-distance-val">25 km</span>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Form 2: Food -->
+                <div class="calc-form-view" id="form-food">
+                  <div class="form-group">
+                    <label for="food-diet-type">Dietary Profile</label>
+                    <select id="food-diet-type" class="form-select">
+                      <option value="meat-heavy">Meat-Heavy (Frequent red meat)</option>
+                      <option value="average" selected>Average Meat Eater (Mixed)</option>
+                      <option value="vegetarian">Vegetarian (No meat, dairy/eggs)</option>
+                      <option value="vegan">Vegan (Strict plant-based)</option>
+                    </select>
+                  </div>
+
+                  <div class="form-group">
+                    <label>Number of Meals Prepared (Today)</label>
+                    <div class="range-slider-container">
+                      <input type="range" id="food-meals" class="range-slider" min="1" max="5" value="3">
+                      <span class="slider-val-badge" id="food-meals-val">3 meals</span>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Form 3: Energy -->
+                <div class="calc-form-view" id="form-energy">
+                  <div class="form-group">
+                    <label>Grid Electricity Consumption (Today's estimate)</label>
+                    <div class="range-slider-container">
+                      <input type="range" id="energy-electricity" class="range-slider" min="0" max="50" value="10" step="0.5">
+                      <span class="slider-val-badge" id="energy-electricity-val">10 kWh</span>
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label>Natural Gas / Home Heating</label>
+                    <div class="range-slider-container">
+                      <input type="range" id="energy-gas" class="range-slider" min="0" max="30" value="5" step="0.5">
+                      <span class="slider-val-badge" id="energy-gas-val">5 kWh</span>
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label>Renewable/Clean Energy Proportion</label>
+                    <div class="range-slider-container">
+                      <input type="range" id="energy-renewable" class="range-slider" min="0" max="100" value="0" step="5">
+                      <span class="slider-val-badge" id="energy-renewable-val">0%</span>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Form 4: Waste -->
+                <div class="calc-form-view" id="form-waste">
+                  <div class="form-group">
+                    <label>General Household Waste Disposed (Today)</label>
+                    <div class="range-slider-container">
+                      <input type="range" id="waste-amount" class="range-slider" min="0" max="20" value="2" step="0.2">
+                      <span class="slider-val-badge" id="waste-amount-val">2.0 kg</span>
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label>Recycling / Composting Ratio</label>
+                    <div class="range-slider-container">
+                      <input type="range" id="waste-recycle" class="range-slider" min="0" max="100" value="30" step="5">
+                      <span class="slider-val-badge" id="waste-recycle-val">30%</span>
+                    </div>
+                  </div>
+                </div>
+
+                <button class="btn btn-primary btn-full-width mt-2" id="log-activity-btn">
+                  <i data-lucide="check"></i> Log activity to Dashboard
+                </button>
+              </div>
+            </div>
+
+            <!-- Output Panel -->
+            <div class="glass-panel result-panel-wrapper">
+              <div class="panel-header">
+                <h3><i data-lucide="eye" class="panel-icon icon-cyan"></i> Impact Analysis</h3>
+              </div>
+              <div class="output-results">
+                <div class="output-hero-stat">
+                  <div class="val" id="calc-estimate-co2">0.0 kg</div>
+                  <div class="label">CO2e Emissions Estimate</div>
+                  <div class="metric-spark-glow"></div>
+                </div>
+
+                <div class="output-breakdown">
+                  <h4>Category Comparison</h4>
+                  
+                  <div>
+                    <div class="factor-bar-row">
+                      <span>Transport</span>
+                      <strong id="breakdown-val-transport">0.0 kg</strong>
+                    </div>
+                    <div class="factor-bar-outer">
+                      <div class="factor-bar-fill fill-transport" id="breakdown-bar-transport" style="width: 0%"></div>
+                    </div>
+                  </div>
+
+                  <div>
+                    <div class="factor-bar-row">
+                      <span>Food</span>
+                      <strong id="breakdown-val-food">0.0 kg</strong>
+                    </div>
+                    <div class="factor-bar-outer">
+                      <div class="factor-bar-fill fill-food" id="breakdown-bar-food" style="width: 0%"></div>
+                    </div>
+                  </div>
+
+                  <div>
+                    <div class="factor-bar-row">
+                      <span>Energy</span>
+                      <strong id="breakdown-val-energy">0.0 kg</strong>
+                    </div>
+                    <div class="factor-bar-outer">
+                      <div class="factor-bar-fill fill-energy" id="breakdown-bar-energy" style="width: 0%"></div>
+                    </div>
+                  </div>
+
+                  <div>
+                    <div class="factor-bar-row">
+                      <span>Waste</span>
+                      <strong id="breakdown-val-waste">0.0 kg</strong>
+                    </div>
+                    <div class="factor-bar-outer">
+                      <div class="factor-bar-fill fill-waste" id="breakdown-bar-waste" style="width: 0%"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 3: CHALLENGES & ACTION INSIGHTS -->
+        <section id="tab-challenges" class="tab-section">
+          <!-- Filter chips -->
+          <div class="tips-filter-bar" id="tips-filter-container">
+            <span class="filter-badge active" data-filter="all">All Recommendations</span>
+            <span class="filter-badge" data-filter="transport">Transport</span>
+            <span class="filter-badge" data-filter="food">Dietary</span>
+            <span class="filter-badge" data-filter="energy">Home Energy</span>
+            <span class="filter-badge" data-filter="waste">Waste Reductions</span>
+          </div>
+
+          <div class="insights-flex-layout">
+            <!-- Left panel: Actionable Tips -->
+            <div class="glass-panel">
+              <div class="panel-header">
+                <h3><i data-lucide="lightbulb" class="panel-icon icon-yellow"></i> Actionable Carbon Tips</h3>
+              </div>
+              <div class="panel-body">
+                <div class="tips-grid" id="tips-container">
+                  <!-- Dynamically Loaded from JS -->
+                </div>
+              </div>
+            </div>
+
+            <!-- Right panel: Active Challenges -->
+            <div class="glass-panel">
+              <div class="panel-header">
+                <h3><i data-lucide="award" class="panel-icon icon-purple"></i> Ecological Challenges</h3>
+              </div>
+              <div class="panel-body">
+                <div class="challenges-list" id="challenges-container">
+                  <!-- Dynamically Loaded from JS -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 4: OFFSET SIMULATOR -->
+        <section id="tab-simulator" class="tab-section">
+          <div class="simulator-layout">
+            <!-- Left panel: Simulator inputs -->
+            <div class="glass-panel">
+              <div class="panel-header">
+                <h3><i data-lucide="settings-2" class="panel-icon icon-cyan"></i> Action Sim Studio</h3>
+              </div>
+              <div class="panel-body flex-col-container">
+                <p class="subtext mb-3">Model long-term carbon offset decisions and visualize the ecological output in real-time.</p>
+
+                <!-- Slider 1: Planting trees -->
+                <div class="sim-slider-card">
+                  <div class="sim-slider-header">
+                    <h4><i data-lucide="tree-pine" class="text-green"></i> Plant Virtual Trees</h4>
+                    <span class="slider-val-badge" id="sim-trees-val">0 trees</span>
+                  </div>
+                  <input type="range" id="sim-trees" class="range-slider" min="0" max="60" value="0">
+                  <p class="subtext text-green" style="font-size:0.75rem;">1 mature tree absorbs ~22.0 kg CO2 per year.</p>
+                </div>
+
+                <!-- Slider 2: Home LED transition -->
+                <div class="sim-slider-card">
+                  <div class="sim-slider-header">
+                    <h4><i data-lucide="lightbulb" class="text-yellow"></i> Upgrade LED Bulbs</h4>
+                    <span class="slider-val-badge" id="sim-bulbs-val">0 bulbs</span>
+                  </div>
+                  <input type="range" id="sim-bulbs" class="range-slider" min="0" max="30" value="0">
+                  <p class="subtext text-yellow" style="font-size:0.75rem;">Upgrading to LED saves ~15.0 kg CO2 per bulb/year.</p>
+                </div>
+
+                <!-- Slider 3: Renewable Solar installation -->
+                <div class="sim-slider-card">
+                  <div class="sim-slider-header">
+                    <h4><i data-lucide="sun" class="text-orange"></i> Solar Power Offset</h4>
+                    <span class="slider-val-badge" id="sim-solar-val">Off</span>
+                  </div>
+                  <input type="range" id="sim-solar" class="range-slider" min="0" max="1" value="0" step="1">
+                  <p class="subtext text-orange" style="font-size:0.75rem;">Residential solar offsets ~1,200.0 kg CO2 per year.</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Right panel: Virtual Forest display -->
+            <div class="glass-panel forest-visualizer-panel">
+              <div class="panel-header">
+                <h3><i data-lucide="globe" class="panel-icon icon-green"></i> Virtual Forest Reserve</h3>
+                <div class="challenge-reward">
+                  <i data-lucide="trending-down"></i>
+                  <span id="sim-projected-reduction">0 kg CO2/yr saved</span>
+                </div>
+              </div>
+              <div class="virtual-forest-grid" id="virtual-forest-grid">
+                <div class="empty-forest-msg">
+                  <i data-lucide="sprout"></i>
+                  <p>Your reserve is currently barren. Adjust the sliders in the Action Sim Studio to grow trees and generate carbon offsets!</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 5: ECO-TRIVIA / QUIZ -->
+        <section id="tab-trivia" class="tab-section">
+          <!-- Setup Panel -->
+          <div class="glass-panel max-width-centered" id="trivia-setup-panel">
+            <div class="panel-header">
+              <h2><i data-lucide="help-circle" class="panel-icon icon-purple"></i> Sustainability Eco-Trivia</h2>
+            </div>
+            <div class="panel-body flex-col-container">
+              <p class="subtext text-center mb-4">Challenge your climate intelligence. Answer environmental queries to raise awareness and test your facts.</p>
+              
+              <div class="form-group">
+                <label for="trivia-topic">Quiz Topic</label>
+                <select id="trivia-topic" class="form-select">
+                  <option value="climate-science" selected>Climate Change & Global Warming</option>
+                  <option value="carbon-footprint">Carbon Footprints & Lifestyle</option>
+                  <option value="renewables">Renewable Energy & Technology</option>
+                  <option value="biodiversity">Conservation & Ecology</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="trivia-size">Number of Questions</label>
+                <select id="trivia-size" class="form-select">
+                  <option value="3">3 Questions (Speed Run)</option>
+                  <option value="5" selected>5 Questions (Standard)</option>
+                  <option value="10">10 Questions (Ultimate Challenge)</option>
+                </select>
+              </div>
+
+              <button class="btn btn-primary btn-full-width mt-4" id="generate-trivia-btn">
+                <i data-lucide="sparkles"></i> Start Trivia Challenge
+              </button>
+            </div>
+          </div>
+
+          <!-- Active Quiz Arena -->
+          <div class="glass-panel max-width-centered hidden" id="trivia-arena-panel">
+            <div class="arena-header">
+              <div class="quiz-badge">
+                <i data-lucide="globe" class="text-green"></i>
+                <span>Eco-IQ Challenge</span>
+              </div>
+              
+              <div class="quiz-stats-group">
+                <div class="quiz-timer">
+                  <i data-lucide="clock"></i>
+                  <span id="trivia-timer-text">00:00</span>
+                </div>
+                <div>
+                  Question <strong id="trivia-current-num">1</strong> of <span id="trivia-total-num">5</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Progress meter -->
+            <div class="factor-bar-outer mb-4">
+              <div class="factor-bar-fill fill-energy" id="trivia-progress-bar" style="width: 20%"></div>
+            </div>
+
+            <!-- Question box -->
+            <div class="quiz-question-box">
+              <h3 class="question-title" id="trivia-question-text">Loading question text...</h3>
+              
+              <div class="quiz-options-list" id="trivia-options-list">
+                <!-- JS Dynamic option button render -->
+              </div>
+            </div>
+
+            <!-- Feedback pane -->
+            <div class="quiz-feedback-panel hidden" id="trivia-feedback-panel">
+              <div class="feedback-status" id="trivia-feedback-status">
+                <i data-lucide="check-circle-2" class="text-green"></i>
+                <span>Correct!</span>
+              </div>
+              <p class="feedback-explanation" id="trivia-feedback-explanation">
+                Explanation content goes here.
+              </p>
+            </div>
+
+            <!-- Footer navigation -->
+            <div class="arena-footer">
+              <button class="btn btn-secondary" id="quit-trivia-btn">Quit Game</button>
+              <button class="btn btn-primary" id="submit-trivia-btn" disabled>Verify Choice</button>
+              <button class="btn btn-primary" id="next-trivia-btn" style="display: none;">Next Query <i data-lucide="chevron-right"></i></button>
+            </div>
+          </div>
+
+          <!-- Results scorecard -->
+          <div class="glass-panel max-width-centered hidden" id="trivia-results-panel">
+            <div class="results-header flex-center-col">
+              <div class="circular-score-widget">
+                <svg width="180" height="180" viewBox="0 0 180 180">
+                  <circle cx="90" cy="90" r="75" class="circle-bg-large"></circle>
+                  <circle cx="90" cy="90" r="75" class="circle-progress-large" id="trivia-score-circle" stroke-dasharray="471.2" stroke-dashoffset="471.2"></circle>
+                </svg>
+                <div class="results-score-text">
+                  <span class="score-pct" id="trivia-score-pct">0%</span>
+                  <span class="score-fraction" id="trivia-score-fraction">0 / 0 Right</span>
+                </div>
+              </div>
+              
+              <h2 id="trivia-results-headline">Evaluation Complete!</h2>
+              <p class="subtext text-center mb-4" id="trivia-results-text" style="max-width: 420px;">You scored 3 out of 5! Good effort. Keep practicing to enhance your climate awareness.</p>
+            </div>
+
+            <!-- Detailed Breakdown -->
+            <div class="results-review-section border-top pt-4">
+              <h3 style="font-size: 1rem; margin-bottom: 1rem;">Detailed Question Breakdown</h3>
+              <div class="review-questions-list" id="trivia-review-list">
+                <!-- JS dynamic render -->
+              </div>
+            </div>
+
+            <div class="results-footer-actions mt-4">
+              <button class="btn btn-secondary" id="trivia-retry-btn">
+                <i data-lucide="refresh-cw"></i> Retry Topic
+              </button>
+              <button class="btn btn-primary" id="trivia-finish-btn">
+                Return to Dashboard
+              </button>
+            </div>
+          </div>
+        </section>
+
+      </div>
+    </main>
+
+  </div>
+
+  <!-- BUDGET CONFIG MODAL -->
+  <div class="modal-overlay hidden" id="goal-modal">
+    <div class="modal-content glass-panel">
+      <div class="modal-header">
+        <h3>Configure Daily Carbon Budget</h3>
+        <button class="btn-icon-alt" id="close-goal-modal-btn"><i data-lucide="x"></i></button>
+      </div>
+      <div class="modal-body flex-col-container">
+        <p class="subtext">Set your target threshold limit for daily CO2e emissions (in kg). A lower budget encourages more sustainable choices.</p>
+        <div class="form-group">
+          <label for="goal-input-field">Daily Target Budget (kg CO2e)</label>
+          <input type="number" id="goal-input-field" class="form-input" min="2" max="100" value="15" step="0.5">
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" id="cancel-goal-btn">Cancel</button>
+        <button class="btn btn-primary" id="save-goal-btn">Save Changes</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOAST ALERTS CONTAINER -->
+  <div class="toast-container" id="toast-container"></div>
+
+  <!-- Core Javascript -->
+  <script src="script.js"></script>
+</body>
+</html>
